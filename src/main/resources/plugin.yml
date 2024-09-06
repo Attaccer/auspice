@@ -1,0 +1,4 @@
+name: Auspice
+version: '0.1-SNAPSHOT'
+main: top.auspice.main.Auspice
+api-version: '1.21'
