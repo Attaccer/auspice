@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.yaml.snakeyaml.internal.Logger.Level;
+import top.auspice.libs.snakeyaml.internal.Logger.Level;
 import top.auspice.libs.snakeyaml.error.YAMLException;
 import top.auspice.libs.snakeyaml.internal.Logger;
 

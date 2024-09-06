@@ -28,9 +28,9 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.yaml.snakeyaml.DumperOptions.ScalarStyle;
-import org.yaml.snakeyaml.DumperOptions.Version;
-import org.yaml.snakeyaml.events.Event.ID;
+import top.auspice.libs.snakeyaml.DumperOptions.ScalarStyle;
+import top.auspice.libs.snakeyaml.DumperOptions.Version;
+import top.auspice.libs.snakeyaml.events.Event.ID;
 import top.auspice.libs.snakeyaml.DumperOptions;
 import top.auspice.libs.snakeyaml.comments.CommentEventsCollector;
 import top.auspice.libs.snakeyaml.comments.CommentLine;
