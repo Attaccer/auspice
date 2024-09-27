@@ -92,7 +92,7 @@ public final class Fn {
         private RuntimeException error;
 
         private ChainedCallable(Callable<R> handle) {
-            this.handle = (Callable)Objects.requireNonNull(handle);
+            this.handle = Objects.requireNonNull(handle);
             this.checkResult();
         }
 

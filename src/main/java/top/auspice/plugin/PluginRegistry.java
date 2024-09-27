@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PluginRegistry {
+public final class PluginRegistry {
     private static final Map<String, AuspicePlugin> names = new HashMap<>();
     private static final Map<String, AuspicePlugin> namespaces = new HashMap<>();
 
@@ -17,7 +17,6 @@ public class PluginRegistry {
     public static AuspicePlugin getPluginFromNamespace(@NonNull String namespace) {
         return namespaces.get(namespace);
     }
-
 
 
     public static void register(AuspicePlugin var0) {

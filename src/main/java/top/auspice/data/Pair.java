@@ -12,15 +12,15 @@ public final class Pair<K, V> implements Map.Entry<K, V> {
     }
 
     public static <K, V> Pair<K, V> of(K key, V value) {
-        return new Pair(key, value);
+        return new Pair<>(key, value);
     }
 
     public static <K, V> Pair<K, V> of(Map.Entry<K, V> entry) {
-        return new Pair(entry.getKey(), entry.getValue());
+        return new Pair<>(entry.getKey(), entry.getValue());
     }
 
     public static <K, V> Pair<K, V> empty() {
-        return new Pair((Object)null, (Object)null);
+        return new Pair<>(null, null);
     }
 
     public K getKey() {
@@ -61,10 +61,9 @@ public final class Pair<K, V> implements Map.Entry<K, V> {
         } else if (!(obj instanceof Map.Entry)) {
             return false;
         } else {
-            boolean var10000;
             label43: {
                 label29: {
-                    Map.Entry<?, ?> entry = (Map.Entry)obj;
+                    Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
                     if (this.key == null) {
                         if (entry.getKey() != null) {
                             break label29;
@@ -82,12 +81,10 @@ public final class Pair<K, V> implements Map.Entry<K, V> {
                     }
                 }
 
-                var10000 = false;
-                return var10000;
+                return false;
             }
 
-            var10000 = true;
-            return var10000;
+            return true;
         }
     }
 

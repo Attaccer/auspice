@@ -196,7 +196,7 @@ public class Constructor extends SafeConstructor {
     // * have it as reference for recursion) and do all other thing on
     // * 2nd step.
     // */
-    // java.lang.reflect.Constructor<?> c =
+    // java.message.reflect.Constructor<?> c =
     // node.getType().getDeclaredConstructor();
     // c.setAccessible(true);
     // return c.newInstance();

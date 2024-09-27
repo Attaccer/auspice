@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.OfflinePlayer;
-import top.auspice.compilers.MathCompiler;
-import top.auspice.compilers.expressions.MathExpression;
-import top.auspice.locale.placeholder.context.PlaceholderProvider;
-import top.auspice.locale.placeholder.context.PlaceholderTranslationContext;
+import top.auspice.config.compilers.math.MathCompiler;
+import top.auspice.config.compilers.base.expressions.MathExpression;
+import top.auspice.locale.message.placeholder.context.PlaceholderProvider;
+import top.auspice.locale.message.placeholder.PlaceholderTranslationContext;
 
 
 public final class MathUtils {
@@ -35,54 +35,10 @@ public final class MathUtils {
         return (int)Math.round((var0 + var2) / 2.0);
     }
 
-    public static double evaluateEquation(String var0, Object... var1) {
-        return eval(var0, (new PlaceholderContextBuilder()).raws(var1));
-    }
-
-    public static double eval(String var0, OfflinePlayer var1, Object... var2) {
-        return eval(var0, (new PlaceholderContextBuilder()).raws(var2).withContext(var1));
-    }
-
     public static double getFractionalPart(double var0) {
         return var0 - (double)((int)var0);
     }
 
-    public static double eval(String var0, PlaceholderContextBuilder var1) {
-        return Strings.isNullOrEmpty(var0) ? 0.0 : eval((MathExpression)MathCompiler.compile(var0), (PlaceholderProvider)var1);
-    }
-
-    public static double eval(MathExpression var0, PlaceholderProvider var1) {
-        return var0.eval((var1x) -> {
-            return expectDouble(var1x, var1.providePlaceholder(var1x));
-        });
-    }
-
-    public static double eval(String var0, MessagePlaceholderProvider var1) {
-        return eval((MathExpression) MathCompiler.compile(var0), (PlaceholderProvider)var1);
-    }
-
-    public static Double expectDouble(String var0, Object var1) {
-        if (var1 == null) {
-            return null;
-        } else {
-            if (var1 instanceof PlaceholderTranslationContext && (var1 = ((PlaceholderTranslationContext)var1).getValue()) instanceof String) {
-                try {
-                    var1 = Double.parseDouble(var1.toString());
-                } catch (NumberFormatException ignored) {
-                }
-            }
-
-            if (var1 instanceof Number) {
-                return ((Number)var1).doubleValue();
-            } else if (var1 instanceof Boolean) {
-                return (Boolean)var1 ? 1.0 : 0.0;
-            } else if (var1 instanceof String) {
-                return (double)var1.hashCode();
-            } else {
-                throw new IllegalArgumentException("Expected an arithmetic placeholder for '" + var0 + "' instead got '" + var1 + "' (" + var1.getClass().getName() + ')');
-            }
-        }
-    }
 
     public static Double parseDouble(String var0) {
         try {
@@ -100,14 +56,6 @@ public final class MathUtils {
         } catch (NumberFormatException var1) {
             return null;
         }
-    }
-
-    public static double eval(String var0, Kingdom var1, Object... var2) {
-        return eval(var0, (new PlaceholderContextBuilder()).raws(var2).withContext(var1));
-    }
-
-    public static double eval(String var0, Nation var1, Object... var2) {
-        return eval(var0, (new PlaceholderContextBuilder()).raws(var2).withContext(var1));
     }
 
     public static Integer parseInt(CharSequence var0) {
@@ -289,21 +237,6 @@ public final class MathUtils {
 
         var0 = randInt(0, var2.size() - 1);
         return (Integer)var2.get(var0);
-    }
-
-    public static int decreasingRandInt(int var0, int var1) {
-        Validate.isTrue(var0 > 0, "Minimum number cannot be less than 1");
-        Validate.isTrue(var1 > var0, "Maximum number cannot be less than the minimum number");
-        int[] var2 = new int[naturalSum(var1 - var0)];
-        int var3 = 0;
-
-        for(var0 = var0; var0 < var1; ++var0) {
-            for(int var4 = var1 - var0 + 1; var4 >= 0; var2[var3++] = var4--) {
-            }
-        }
-
-        var0 = randInt(0, var2.length - 1);
-        return var2[var0];
     }
 
     public static int naturalSum(int var0) {

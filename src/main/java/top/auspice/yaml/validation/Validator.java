@@ -17,7 +17,7 @@ public final class Validator {
         Objects.requireNonNull(root);
         Objects.requireNonNull(validator);
         Objects.requireNonNull(validatorMap);
-        List<ValidationFailure> errors = new ArrayList();
+        List<ValidationFailure> errors = new ArrayList<>();
         validator.validate(new ValidationContext(root, validatorMap, errors));
         return errors;
     }
