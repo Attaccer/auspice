@@ -2,7 +2,7 @@ package top.auspice.locale;
 
 import java.util.Locale;
 
-public enum SupportedLanguage implements StyledLanguage {
+public enum SupportedLocale implements StyledLanguage {
 
     EN(Locale.ENGLISH),
     CH(Locale.CHINESE),
@@ -14,7 +14,7 @@ public enum SupportedLanguage implements StyledLanguage {
 
     private final Locale locale;
 
-    SupportedLanguage(Locale locale) {
+    SupportedLocale(Locale locale) {
         this.locale = locale;
     }
 

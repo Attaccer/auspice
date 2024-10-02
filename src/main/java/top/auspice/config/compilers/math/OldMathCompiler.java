@@ -23,9 +23,9 @@ import java.util.stream.Stream;
 
 
 @SuppressWarnings("unused")
-public final class MathCompiler {
+public final class OldMathCompiler {
     @NotNull
-    public static final Companion Companion;
+    public static final Companion COMPANION;
     @NotNull
     private final String a;
     private int b;
@@ -42,12 +42,12 @@ public final class MathCompiler {
     @NotNull
     private static final Operator[] i = new Operator[127];
     @NotNull
-    private static final MathematicalVariableTranslator j = MathCompiler::b;
+    private static final MathematicalVariableTranslator j = OldMathCompiler::b;
     
     @NotNull
     public static final Expression DEFAULT_VALUE;
 
-    private MathCompiler(@NotNull String var1, int var2, int var3, boolean var4, @NotNull LinkedList<LexicalEnvironment> var5) {
+    private OldMathCompiler(@NotNull String var1, int var2, int var3, boolean var4, @NotNull LinkedList<LexicalEnvironment> var5) {
         this.a = var1;
         this.b = var2;
         this.c = var3;
@@ -99,7 +99,7 @@ public final class MathCompiler {
                     int var4;
                     int var5;
                     int var6;
-                    MathCompiler var18;
+                    OldMathCompiler var18;
                     char var21;
                     Expression var27;
                     String var32;
@@ -134,9 +134,9 @@ public final class MathCompiler {
 
                         ConstantExpr var25;
                         try {
-                            var25 = new ConstantExpr(Double.parseDouble(var24), MathCompiler.ConstantExprType.NUMBER);
+                            var25 = new ConstantExpr(Double.parseDouble(var24), OldMathCompiler.ConstantExprType.NUMBER);
                         } catch (NumberFormatException var16) {
-                            throw this.a(var2, "Invalid numeric value \"" + var24 + '"', MathCompiler.Companion.access$pointerToName(Companion, var2, var24));
+                            throw this.a(var2, "Invalid numeric value \"" + var24 + '"', OldMathCompiler.COMPANION.access$pointerToName(COMPANION, var2, var24));
                         }
 
                         var33 = var25;
@@ -216,8 +216,8 @@ public final class MathCompiler {
                             LinkedList<LexicalEnvironment> var36 = this.e;
                             var2 = this.b++;
                             var36.add(new LexicalEnvironment(var2, null));
-                            MathCompiler var19;
-                            var27 = (var19 = new MathCompiler(this.a, this.b, this.c, true, this.e)).a();
+                            OldMathCompiler var19;
+                            var27 = (var19 = new OldMathCompiler(this.a, this.b, this.c, true, this.e)).a();
                             this.b = var19.b;
                             var33 = var27;
                         } else {
@@ -265,7 +265,7 @@ public final class MathCompiler {
 
                             label196:
                             for(; var26 instanceof Operator; var26 = var18.f.peekLast()) {
-                                switch (MathCompiler.WhenMappings.$EnumSwitchMapping$0[((Operator)var26).getArity$core().ordinal()]) {
+                                switch (OldMathCompiler.WhenMappings.$EnumSwitchMapping$0[((Operator)var26).getArity$core().ordinal()]) {
                                     case 1:
                                         break label196;
                                     case 2:
@@ -299,14 +299,14 @@ public final class MathCompiler {
 
 
 
-    public static final class isInsideFunction extends Lambda<Boolean> implements Function1<MathCompiler.LexicalEnvironment, Boolean> {
+    public static final class isInsideFunction extends Lambda<Boolean> implements Function1<OldMathCompiler.LexicalEnvironment, Boolean> {
         public static final isInsideFunction INSTANCE = new isInsideFunction();
 
         public isInsideFunction() {
             super(1);
         }
 
-        public Boolean invoke(MathCompiler.LexicalEnvironment var1) {
+        public Boolean invoke(OldMathCompiler.LexicalEnvironment var1) {
             return var1.getFunction() != null;
         }
     }
@@ -402,7 +402,7 @@ public final class MathCompiler {
             throw a(this.b, "Reserved single underscore identifier", List.of(4));
         } else {
             this.b = var2;
-            MathCompiler var3 = this;
+            OldMathCompiler var3 = this;
             int var4 = this.b;
             int var5 = this.c;
 
@@ -424,7 +424,7 @@ public final class MathCompiler {
     }
 
     private FunctionExpr a(String var1) {
-        String var2 = (var2 = MathCompiler.Companion.access$findFunction(Companion, var1)) == null ? "" : "; Did you mean '" + var2 + "' function?";
+        String var2 = (var2 = OldMathCompiler.COMPANION.access$findFunction(COMPANION, var1)) == null ? "" : "; Did you mean '" + var2 + "' function?";
         Function var10000 = h.get(var1);
         if (var10000 == null) {
             throw a(this.b, "Unknown function: " + var1 + var2, List.of(4));
@@ -436,9 +436,9 @@ public final class MathCompiler {
             int var5 = this.b;
 
             do {
-                MathCompiler var6;
+                OldMathCompiler var6;
                 Expression var7;
-                if (!Intrinsics.areEqual(var7 = (var6 = new MathCompiler(this.a, this.b, this.c, true, this.e)).a(), DEFAULT_VALUE)) {
+                if (!Intrinsics.areEqual(var7 = (var6 = new OldMathCompiler(this.a, this.b, this.c, true, this.e)).a(), DEFAULT_VALUE)) {
                     var9.add(var7);
                 }
 
@@ -450,15 +450,15 @@ public final class MathCompiler {
             if (var10000.getArgCount() < 0) {
                 var10 = Math.abs(var10000.getArgCount()) - 1;
                 if (var9.size() < var10) {
-                    throw this.a(var5, "Too few arguments for function '" + var1 + "', expected at least: " + var10 + ", got: " + var9.size(), MathCompiler.Companion.access$pointerToName(Companion, var5, var1));
+                    throw this.a(var5, "Too few arguments for function '" + var1 + "', expected at least: " + var10 + ", got: " + var9.size(), OldMathCompiler.COMPANION.access$pointerToName(COMPANION, var5, var1));
                 }
             } else {
                 if (var9.size() < var10000.getArgCount()) {
-                    throw this.a(var5, "Too few arguments for function '" + var1 + "', expected: " + var10000.getArgCount() + ", got: " + var9.size(), MathCompiler.Companion.access$pointerToName(Companion, var5, var1));
+                    throw this.a(var5, "Too few arguments for function '" + var1 + "', expected: " + var10000.getArgCount() + ", got: " + var9.size(), OldMathCompiler.COMPANION.access$pointerToName(COMPANION, var5, var1));
                 }
 
                 if (var9.size() > var10000.getArgCount()) {
-                    throw this.a(var5, "Too many arguments for function '" + var1 + "', expected: " + var10000.getArgCount() + ", got: " + var9.size(), MathCompiler.Companion.access$pointerToName(Companion, var5, var1));
+                    throw this.a(var5, "Too many arguments for function '" + var1 + "', expected: " + var10000.getArgCount() + ", got: " + var9.size(), OldMathCompiler.COMPANION.access$pointerToName(COMPANION, var5, var1));
                 }
             }
 
@@ -482,7 +482,7 @@ public final class MathCompiler {
         char[] var7;
         Arrays.fill(var7 = new char[var4 + 2], ' ');
         String var8 = new String(var7);
-        var3.forEach(MathCompiler::a);
+        var3.forEach(OldMathCompiler::a);
         return new MathEvaluateException(var2 + '\n' + var8);
     }
 
@@ -503,25 +503,25 @@ public final class MathCompiler {
 
     @NotNull
     public static Map<String, Double> getConstants() {
-        return Companion.getConstants();
+        return COMPANION.getConstants();
     }
 
     @NotNull
     public static Map<String, Function> getFunctions() {
-        return Companion.getFunctions();
+        return COMPANION.getFunctions();
     }
 
     @NotNull
     public static Expression compile(@Nullable String var0) throws NumberFormatException, ArithmeticException {
-        return Companion.compile(var0);
+        return COMPANION.compile(var0);
     }
 
     static {
-        Companion = new Companion();
+        COMPANION = new Companion();
         DEFAULT_VALUE = new ConstantExpr(0.0, ConstantExprType.NUMBER);
-        MathCompiler.Companion.registerOperators();
-        MathCompiler.Companion.registerFunctions();
-        MathCompiler.Companion.registerConstants();
+        OldMathCompiler.COMPANION.registerOperators();
+        OldMathCompiler.COMPANION.registerFunctions();
+        OldMathCompiler.COMPANION.registerConstants();
     }
 
 
@@ -600,32 +600,32 @@ public final class MathCompiler {
         
         @NotNull
         public Map<String, Double> getConstants() {
-            return MathCompiler.g;
+            return OldMathCompiler.g;
         }
 
         
         @NotNull
         public Map<String, Function> getFunctions() {
-            return MathCompiler.h;
+            return OldMathCompiler.h;
         }
 
         private static void a(Operator var0) {
-            if (var0.getSymbol() >= MathCompiler.i.length) {
+            if (var0.getSymbol() >= OldMathCompiler.i.length) {
                 String var1 = "Operator handler cannot handle char '" + var0.getSymbol() + "' with char code: " + var0.getSymbol();
                 throw new IllegalArgumentException(var1);
             } else {
-                MathCompiler.i[var0.getSymbol()] = var0;
+                OldMathCompiler.i[var0.getSymbol()] = var0;
             }
         }
 
         private static void a(String var0, boolean var1, QuantumFunction var2, int var3) {
-            MathCompiler.h.put(var0, new Function(var2, var1, var3));
+            OldMathCompiler.h.put(var0, new Function(var2, var1, var3));
         }
 
         @NotNull
         public Expression compile(@Nullable String var1) throws NumberFormatException, ArithmeticException {
             CharSequence var2;
-            return (var2 = var1) == null || var2.isEmpty() ? MathCompiler.DEFAULT_VALUE : this.a((new MathCompiler(var1, 0, 0, false, new LinkedList<>())).a()).withOriginalString(var1);
+            return (var2 = var1) == null || var2.isEmpty() ? OldMathCompiler.DEFAULT_VALUE : this.a((new OldMathCompiler(var1, 0, 0, false, new LinkedList<>())).a()).withOriginalString(var1);
         }
 
         private Expression a(Expression var1) {
@@ -655,7 +655,7 @@ public final class MathCompiler {
                 }
 
                 if (var8) {
-                    return new ConstantExpr(((FunctionExpr)var1).getHandler$core().getFunction$core().apply(new FnArgs((FunctionExpr)var1, MathCompiler.j)), ConstantExprType.OPTIMIZED);
+                    return new ConstantExpr(((FunctionExpr)var1).getHandler$core().getFunction$core().apply(new FnArgs((FunctionExpr)var1, OldMathCompiler.j)), ConstantExprType.OPTIMIZED);
                 }
 
                 Collection<Expression> var10;
@@ -665,8 +665,13 @@ public final class MathCompiler {
             return var1;
         }
 
-        private static double pow(double var0, double var2) {
+
+        private static double a(double var0, double var2) {
             return Math.pow(var0, var2);
+        }
+
+        private static double b(double var0, double var2) {
+            return var0 * var2;
         }
 
         private static double c(double var0, double var2) {
@@ -681,11 +686,11 @@ public final class MathCompiler {
             return var0 % var2;
         }
 
-        private static double sum(double var0, double var2) {
+        private static double f(double var0, double var2) {
             return Double.sum(var0, var2);
         }
 
-        private static double minus(double var0, double var2) {
+        private static double g(double var0, double var2) {
             return var0 - var2;
         }
 
@@ -693,11 +698,11 @@ public final class MathCompiler {
             return (double)(~((long)var2));
         }
 
-        private static double rotateLeft(double var0, double var2) {
+        private static double i(double var0, double var2) {
             return (double)Long.rotateLeft((long)var0, (int)var2);
         }
 
-        private static double rotateRight(double var0, double var2) {
+        private static double j(double var0, double var2) {
             return (double)Long.rotateRight((long)var0, (int)var2);
         }
 
@@ -725,281 +730,288 @@ public final class MathCompiler {
             return (double)((long)var0 | (long)var2);
         }
 
-        private static double abs(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double a(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.abs(var0.next());
         }
 
-        private static double acos(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double b(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.acos(var0.next());
         }
 
-        private static double asin(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double c(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.asin(var0.next());
         }
 
-        private static double atan(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double d(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.atan(var0.next());
         }
 
-        private static double cbrt(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double e(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.cbrt(var0.next());
         }
 
-        private static double ceil(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double f(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.ceil(var0.next());
         }
 
-        private static double cos(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double g(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.cos(var0.next());
         }
 
-        private static double cosh(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double h(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.cosh(var0.next());
         }
 
-        private static double exp(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double i(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.exp(var0.next());
         }
 
-        private static double expm1(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double j(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.expm1(var0.next());
         }
 
-        private static double floor(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double k(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.floor(var0.next());
         }
 
-        private static double getExponent(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double l(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.getExponent(var0.next());
         }
 
-        private static double log(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double m(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.log(var0.next());
         }
 
-        private static double log10(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double n(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.log10(var0.next());
         }
 
-        private static double log1p(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double o(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.log1p(var0.next());
         }
 
-        private static double maxOrThrow(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double p(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return CollectionsKt.maxOrThrow(var0.allArgs());
         }
 
-        private static double minOrThrow(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double q(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return CollectionsKt.minOrThrow(var0.allArgs());
         }
 
-        private static double nextUp(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double r(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.nextUp(var0.next());
         }
 
-        private static double nextDown(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double s(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.nextDown(var0.next());
         }
 
-        private static double nextAfter(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double t(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.nextAfter(var0.next(), var0.next());
         }
 
-        private static double doubleRandom(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double u(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return ThreadLocalRandom.current().nextDouble(var0.next(), var0.next() + 1.0);
         }
 
-        private static double intRandom(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double v(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return ThreadLocalRandom.current().nextInt((int)var0.next(), (int)var0.next() + 1);
         }
 
-        private static double round(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double w(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return (double)Math.round(var0.next());
         }
 
-        private static double rint(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double x(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.rint(var0.next());
         }
 
-        private static double signum(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double y(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.signum(var0.next());
         }
 
         private static double z(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() / var0.next() * 100.0;
         }
 
         private static double A(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() / 100.0 * var0.next();
         }
 
-        private static double sin(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double B(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.sin(var0.next());
         }
 
-        private static double sinh(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double C(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.sinh(var0.next());
         }
 
         private static double D(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return (double)Double.doubleToRawLongBits(var0.next());
         }
 
-        private static double hashCode(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double E(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return Double.hashCode(var0.next());
         }
 
-        private static double identityHashCode(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+        private static double F(FnArgs var0) {
+            Intrinsics.checkNotNullParameter(var0, "");
             return System.identityHashCode(var0.next());
         }
 
         private static double G(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return (double)System.currentTimeMillis();
         }
 
         private static double H(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.sqrt(var0.next());
         }
 
         private static double I(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.tan(var0.next());
         }
 
         private static double J(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.tanh(var0.next());
         }
 
         private static double K(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.toDegrees(var0.next());
         }
 
         private static double L(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.toRadians(var0.next());
         }
 
         private static double M(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.ulp(var0.next());
         }
 
         private static double N(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.scalb(var0.next(), (int)var0.next());
         }
 
         private static double O(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.hypot(var0.next(), var0.next());
         }
 
         private static double P(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.copySign(var0.next(), var0.next());
         }
 
         private static double Q(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return Math.IEEEremainder(var0.next(), var0.next());
         }
 
         private static double R(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             int var1;
             return (double)((var1 = (int)var0.next()) * (var1 + 1)) / 2.0;
         }
 
         private static double S(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return (double)Long.reverse((long)var0.next());
         }
 
         private static double T(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return (double)Long.reverseBytes((long)var0.next());
         }
 
         private static double U(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() == var0.next() ? var0.next() : var0.next(3);
         }
 
         private static double V(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() != var0.next() ? var0.next() : var0.next(3);
         }
 
         private static double W(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() > var0.next() ? var0.next() : var0.next(3);
         }
 
         private static double X(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() < var0.next() ? var0.next() : var0.next(3);
         }
 
         private static double Y(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() >= var0.next() ? var0.next() : var0.next(3);
         }
 
         private static double Z(FnArgs var0) {
-            Objects.requireNonNull(var0, "");
+            Intrinsics.checkNotNullParameter(var0, "");
             return var0.next() <= var0.next() ? var0.next() : var0.next(3);
         }
 
-        private static boolean a(Function1<Object, Boolean> var0, Object var1) {
-            Objects.requireNonNull(var0, "");
-            return var0.invoke(var1);
+        private static boolean a(Function1 var0, Object var1) {
+            Intrinsics.checkNotNullParameter(var0, "");
+            return (Boolean)var0.invoke(var1);
         }
 
-        private static boolean b(java.util.function.Function<Object, Boolean> var0, Object var1) {
-            Objects.requireNonNull(var0, "");
-            return var0.apply(var1);
+        private static boolean b(Function1 var0, Object var1) {
+            Intrinsics.checkNotNullParameter(var0, "");
+            return (Boolean)var0.invoke(var1);
         }
 
+
+        private static void a(OldMathCompiler.Companion companion, String string, OldMathCompiler.QuantumFunction quantumFunction, int n, int n2) {
+            n = 1;
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+        }
+        
+        
         private static String a(final String var0) {
             Objects.requireNonNull(var0, "");
 
-            return MathCompiler.h.keySet().stream().filter((var1) -> {
+            return OldMathCompiler.h.keySet().stream().filter((var1) -> {
                 Objects.requireNonNull(var1, "");
                 Locale var10000 = Locale.ENGLISH;
                 Intrinsics.checkNotNullExpressionValue(var10000, "");
@@ -1010,21 +1022,162 @@ public final class MathCompiler {
             }).findFirst().orElse(null);
         }
 
-        public String access$findFunction(MathCompiler.Companion companion, String a) {
-
-
-
-
-            return companion.getFunctions().getOrDefault(a, );
-            //TODO
+        public static final Collection access$pointerToName(OldMathCompiler.Companion companion, int n, String object) {
+            String string = object;
+            int n2 = n;
+            object = new ArrayList(string.length());
+            int n3 = string.length();
+            for (int i = 1; i < n3; ++i) {
+                object.add(n2 + i);
+            }
+            return (Collection)object;
         }
 
-        public Collection<Integer> access$pointerToName(MathCompiler.Companion companion, int var5, String var1) {
+        public static String access$findFunction(OldMathCompiler.Companion object, String object2) {
+            object2 = object = object2;
+            Locale locale = Locale.ENGLISH;
+            Intrinsics.checkNotNullExpressionValue(locale, "");
+            String string = object2.toLowerCase(locale);
+            Intrinsics.checkNotNullExpressionValue(string, "");
+            object = string;
+            object2 = OldMathCompiler.access$getFUNCTIONS$cp().keySet().stream().filter(arg_0 -> OldMathCompiler.Companion.a((Function1)new /* Unavailable Anonymous Inner Class!! */, arg_0)).findFirst();
+            return ((Optional)object2).orElseGet(() -> OldMathCompiler.Companion.a((String)object));
+        }
 
 
+        public static void access$registerOperators(Companion companion) {
+            a(new OldMathCompiler.Operator('^', 12, 13, OldMathCompiler.Side.NONE, OldMathCompiler.Companion::a));
+            a(new OldMathCompiler.Operator('*', 10, OldMathCompiler.Companion::b));
+            a(new OldMathCompiler.Operator('(', 10, OldMathCompiler.Companion::c));
+            a(new OldMathCompiler.Operator('/', 10, OldMathCompiler.Companion::d));
+            a(new OldMathCompiler.Operator('%', 10, OldMathCompiler.Companion::e));
+            a(new OldMathCompiler.Operator('+', 9, OldMathCompiler.Companion::f));
+            a(new OldMathCompiler.Operator('-', 9, OldMathCompiler.Companion::g));
+            a(new OldMathCompiler.Operator('~', 10, OldMathCompiler.Companion::h));
+            a(new OldMathCompiler.Operator('@', 8, OldMathCompiler.Companion::i));
+            a(new OldMathCompiler.Operator('#', 8, OldMathCompiler.Companion::j));
+            a(new OldMathCompiler.Operator('>', 8, OldMathCompiler.Companion::k));
+            a(new OldMathCompiler.Operator('<', 8, OldMathCompiler.Companion::l));
+            a(new OldMathCompiler.Operator('$', 8, OldMathCompiler.Companion::m));
+            a(new OldMathCompiler.Operator('&', 7, OldMathCompiler.Companion::n));
+            a(new OldMathCompiler.Operator('!', 6, OldMathCompiler.Companion::o));
+            a(new OldMathCompiler.Operator('|', 5, OldMathCompiler.Companion::p));
+        }
 
 
-            //TODO
+        public static final void access$registerFunctions(OldMathCompiler.Companion companion) {
+            OldMathCompiler.Companion.a(companion, "abs", OldMathCompiler.Companion::a, 0, 4);
+            OldMathCompiler.Companion.a(companion, "acos", OldMathCompiler.Companion::b, 0, 4);
+            OldMathCompiler.Companion.a(companion, "asin", OldMathCompiler.Companion::c, 0, 4);
+            OldMathCompiler.Companion.a(companion, "atan", OldMathCompiler.Companion::d, 0, 4);
+            OldMathCompiler.Companion.a(companion, "cbrt", OldMathCompiler.Companion::e, 0, 4);
+            OldMathCompiler.Companion.a(companion, "ceil", OldMathCompiler.Companion::f, 0, 4);
+            OldMathCompiler.Companion.a(companion, "cos", OldMathCompiler.Companion::g, 0, 4);
+            OldMathCompiler.Companion.a(companion, "cosh", OldMathCompiler.Companion::h, 0, 4);
+            OldMathCompiler.Companion.a(companion, "exp", OldMathCompiler.Companion::i, 0, 4);
+            OldMathCompiler.Companion.a(companion, "expm1", OldMathCompiler.Companion::j, 0, 4);
+            OldMathCompiler.Companion.a(companion, "floor", OldMathCompiler.Companion::k, 0, 4);
+            OldMathCompiler.Companion.a(companion, "getExponent", OldMathCompiler.Companion::l, 0, 4);
+            OldMathCompiler.Companion.a(companion, "log", OldMathCompiler.Companion::m, 0, 4);
+            OldMathCompiler.Companion.a(companion, "log10", OldMathCompiler.Companion::n, 0, 4);
+            OldMathCompiler.Companion.a(companion, "log1p", OldMathCompiler.Companion::o, 0, 4);
+            int n = -2;
+            OldMathCompiler.QuantumFunction quantumFunction = OldMathCompiler.Companion::p;
+            String string = "max";
+            OldMathCompiler.Companion companion2 = companion;
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = -2;
+            quantumFunction = OldMathCompiler.Companion::q;
+            string = "min";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            OldMathCompiler.Companion.a(companion, "nextUp", OldMathCompiler.Companion::r, 0, 4);
+            OldMathCompiler.Companion.a(companion, "nextDown", OldMathCompiler.Companion::s, 0, 4);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::t;
+            string = "nextAfter";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            OldMathCompiler.Companion.a("random", false, OldMathCompiler.Companion::u, 2);
+            OldMathCompiler.Companion.a("randInt", false, OldMathCompiler.Companion::v, 2);
+            OldMathCompiler.Companion.a(companion, "round", OldMathCompiler.Companion::w, 0, 4);
+            OldMathCompiler.Companion.a(companion, "rint", OldMathCompiler.Companion::x, 0, 4);
+            OldMathCompiler.Companion.a(companion, "signum", OldMathCompiler.Companion::y, 0, 4);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::z;
+            string = "whatPercentOf";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::A;
+            string = "percentOf";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            OldMathCompiler.Companion.a(companion, "sin", OldMathCompiler.Companion::B, 0, 4);
+            OldMathCompiler.Companion.a(companion, "sinh", OldMathCompiler.Companion::C, 0, 4);
+            OldMathCompiler.Companion.a(companion, "bits", OldMathCompiler.Companion::D, 0, 4);
+            OldMathCompiler.Companion.a(companion, "hash", OldMathCompiler.Companion::E, 0, 4);
+            OldMathCompiler.Companion.a(companion, "identityHash", OldMathCompiler.Companion::F, 0, 4);
+            OldMathCompiler.Companion.a("time", false, OldMathCompiler.Companion::G, 0);
+            OldMathCompiler.Companion.a(companion, "sqrt", OldMathCompiler.Companion::H, 0, 4);
+            OldMathCompiler.Companion.a(companion, "tan", OldMathCompiler.Companion::I, 0, 4);
+            OldMathCompiler.Companion.a(companion, "tanh", OldMathCompiler.Companion::J, 0, 4);
+            OldMathCompiler.Companion.a(companion, "toDegrees", OldMathCompiler.Companion::K, 0, 4);
+            OldMathCompiler.Companion.a(companion, "toRadians", OldMathCompiler.Companion::L, 0, 4);
+            OldMathCompiler.Companion.a(companion, "ulp", OldMathCompiler.Companion::M, 0, 4);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::N;
+            string = "scalb";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::O;
+            string = "hypot";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::P;
+            string = "copySign";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 2;
+            quantumFunction = OldMathCompiler.Companion::Q;
+            string = "IEEEremainder";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            OldMathCompiler.Companion.a(companion, "naturalSum", OldMathCompiler.Companion::R, 0, 4);
+            OldMathCompiler.Companion.a(companion, "reverse", OldMathCompiler.Companion::S, 0, 4);
+            OldMathCompiler.Companion.a(companion, "reverseBytes", OldMathCompiler.Companion::T, 0, 4);
+            n = 4;
+            quantumFunction = OldMathCompiler.Companion::U;
+            string = "eq";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 4;
+            quantumFunction = OldMathCompiler.Companion::V;
+            string = "ne";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 4;
+            quantumFunction = OldMathCompiler.Companion::W;
+            string = "gt";
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 4;
+            quantumFunction = OldMathCompiler.Companion::X;
+            string = "lt";
+            companion2 = companion;
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 4;
+            quantumFunction = OldMathCompiler.Companion::Y;
+            string = "ge";
+            companion2 = companion;
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+            n = 4;
+            quantumFunction = OldMathCompiler.Companion::Z;
+            string = "le";
+            companion2 = companion;
+            OldMathCompiler.Companion.a(string, true, quantumFunction, n);
+        }
+
+        public static void access$registerConstants(OldMathCompiler.Companion companion) {
+            OldMathCompiler.access$getCONSTANTS$cp().put("E", Math.E);
+            OldMathCompiler.access$getCONSTANTS$cp().put("PI", Math.PI);
+            OldMathCompiler.access$getCONSTANTS$cp().put("Euler", 0.5772156649015329);
+            OldMathCompiler.access$getCONSTANTS$cp().put("LN2", 0.693147180559945);
+            OldMathCompiler.access$getCONSTANTS$cp().put("LN10", 2.302585092994046);
+            OldMathCompiler.access$getCONSTANTS$cp().put("LOG2E", 1.442695040888963);
+            OldMathCompiler.access$getCONSTANTS$cp().put("LOG10E", 0.434294481903252);
+            OldMathCompiler.access$getCONSTANTS$cp().put("PHI", 1.618033988749895);
         }
 
         public void registerOperators() {
@@ -1039,8 +1192,16 @@ public final class MathCompiler {
             //TODO
         }
     }
-    
-    
+
+    private static Map<String, Double> access$getFUNCTIONS$cp() {
+        return g;
+    }
+
+    private static Map<String, Function> access$getCONSTANTS$cp() {
+        return h;
+    }
+
+
     public static class ConstantExpr extends Expression {
         private final double a;
         @NotNull
@@ -1063,7 +1224,7 @@ public final class MathCompiler {
         }
 
         public ConstantExpr(double var1) {
-            this(var1, MathCompiler.ConstantExprType.NUMBER);
+            this(var1, OldMathCompiler.ConstantExprType.NUMBER);
         }
 
         @NotNull
@@ -1119,7 +1280,7 @@ public final class MathCompiler {
         public abstract Double eval(@NotNull MathematicalVariableTranslator var1);
 
         public boolean isDefault() {
-            return this == MathCompiler.DEFAULT_VALUE;
+            return this == OldMathCompiler.DEFAULT_VALUE;
         }
 
         @Nullable
@@ -1357,7 +1518,7 @@ public final class MathCompiler {
             this.c = (byte)var3;
             this.d = var4;
             this.f = var5;
-            this.e = (var1) == '-' ? MathCompiler.Arity.UNARY_AND_BINARY : (var1 == '~' ? MathCompiler.Arity.UNARY : MathCompiler.Arity.BINARY);
+            this.e = (var1) == '-' ? OldMathCompiler.Arity.UNARY_AND_BINARY : (var1 == '~' ? OldMathCompiler.Arity.UNARY : OldMathCompiler.Arity.BINARY);
         }
 
 
@@ -1376,7 +1537,7 @@ public final class MathCompiler {
         }
 
         public Operator(char var1, int var2, @NotNull TriDoubleFn var3) {
-            this(var1, var2, var2, MathCompiler.Side.NONE, var3);
+            this(var1, var2, var2, OldMathCompiler.Side.NONE, var3);
         }
 
         @NotNull
@@ -1402,7 +1563,6 @@ public final class MathCompiler {
         RIGHT,
         LEFT,
         NONE,
-        ;
 
     }
 
@@ -1412,7 +1572,7 @@ public final class MathCompiler {
         private final String a;
 
         public StringConstant(@NotNull String var1) {
-            super(var1.hashCode(), MathCompiler.ConstantExprType.STRING);
+            super(var1.hashCode(), OldMathCompiler.ConstantExprType.STRING);
             this.a = var1;
         }
 
@@ -1459,7 +1619,7 @@ public final class MathCompiler {
             Objects.requireNonNull(var1, "");
             Double var3;
             if ((var3 = var1.apply(this.a)) == null) {
-                String var4 = MathCompiler.Companion.access$findFunction(MathCompiler.Companion, this.a);
+                String var4 = OldMathCompiler.COMPANION.access$findFunction(OldMathCompiler.COMPANION, this.a);
                 String var2 = "";
                 if (var4 != null) {
                     var2 = "; Did you mean to invoke '" + var4 + "' function? If so, put parentheses after the name like '" + var4 + "(args)'";

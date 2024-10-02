@@ -29,9 +29,14 @@ public class ConfigSection {
         return new ConfigSection(new MappingNode());
     }
 
-    public ConfigSection(NodePair var1) {
-        this(var1.getKey(), (MappingNode)var1.getValue());
+
+//    public ConfigSection(NodePair var1) {
+//        this(var1.getKey(), (MappingNode)var1.getValue());
+//    }
+    public ConfigSection(NodeTuple var1) {
+        this(((ScalarNode) var1.getKeyNode()), (MappingNode)var1.getValueNode());
     }
+
 
     @Deprecated
     public @NotNull Set<String> getKeys(boolean var1) {
@@ -54,38 +59,72 @@ public class ConfigSection {
         return this.key;
     }
 
+//    public @NotNull Set<String> getKeys() {
+//        return this.root.getPairs().keySet();
+//    }
     public @NotNull Set<String> getKeys() {
-        return this.root.getPairs().keySet();
+        Set<String> out = new HashSet<>();
+        for (NodeTuple tuple : this.root.getValue()) {
+            out.add(((ScalarNode) tuple.getKeyNode()).getValue());
+        }
+        return out;
     }
 
     public MappingNode getCurrentNode() {
         return this.root;
     }
 
+//    public @NotNull Map<String, ConfigSection> getSections() {
+//        LinkedHashMap var1 = new LinkedHashMap();
+//        Iterator var2 = this.root.getPairs().values().iterator();
+//
+//        while(var2.hasNext()) {
+//            NodePair var3;
+//            if ((var3 = (NodePair)var2.next()).getValue() instanceof MappingNode) {
+//                var1.put(var3.getKey().getValue(), new ConfigSection(var3.getKey(), (MappingNode)var3.getValue()));
+//            }
+//        }
+//
+//        return var1;
+//    }
+//
     public @NotNull Map<String, ConfigSection> getSections() {
-        LinkedHashMap var1 = new LinkedHashMap();
-        Iterator var2 = this.root.getPairs().values().iterator();
+        LinkedHashMap<String, ConfigSection> var1 = new LinkedHashMap<>();
 
-        while(var2.hasNext()) {
-            NodePair var3;
-            if ((var3 = (NodePair)var2.next()).getValue() instanceof MappingNode) {
-                var1.put(var3.getKey().getValue(), new ConfigSection(var3.getKey(), (MappingNode)var3.getValue()));
+        for (NodeTuple nodeTuple : this.root.getValue()) {
+            NodeTuple var3;
+            if ((var3 = nodeTuple).getValueNode() instanceof MappingNode) {
+                var1.put(((ScalarNode) var3.getKeyNode()).getValue(), new ConfigSection((ScalarNode) var3.getKeyNode(), (MappingNode) var3.getValueNode()));
             }
         }
 
         return var1;
     }
 
+//    public @NotNull Map<String, Object> getValues(boolean var1) {
+//        if (var1) {
+//            throw new UnsupportedOperationException("Deep keys are not supported");
+//        } else {
+//            LinkedHashMap var4 = new LinkedHashMap();
+//            Iterator var2 = this.root.getPairs().values().iterator();
+//
+//            while(var2.hasNext()) {
+//                NodePair var3 = (NodePair)var2.next();
+//                var4.put(var3.getKey().getValue(), var3.getValue().getParsed());
+//            }
+//
+//            return var4;
+//        }
+//    }
+
     public @NotNull Map<String, Object> getValues(boolean var1) {
         if (var1) {
             throw new UnsupportedOperationException("Deep keys are not supported");
         } else {
-            LinkedHashMap var4 = new LinkedHashMap();
-            Iterator var2 = this.root.getPairs().values().iterator();
+            LinkedHashMap<String, Object> var4 = new LinkedHashMap<>();
 
-            while(var2.hasNext()) {
-                NodePair var3 = (NodePair)var2.next();
-                var4.put(var3.getKey().getValue(), var3.getValue().getParsed());
+            for (NodeTuple tuple : this.root.getValue()) {
+                var4.put(((ScalarNode) tuple.getKeyNode()).getValue(), tuple.getValueNode().getParsed());
             }
 
             return var4;
@@ -93,19 +132,49 @@ public class ConfigSection {
     }
 
 
+//    public NodePair getPair(String var1) {
+//        return (NodePair)this.root.getPairs().get(var1);
+//    }
 
-    public Node getNode(String var1) {
-        NodePair var2;
-        return (var2 = this.getPair(var1)) == null ? null : var2.getValue();
+    public NodeTuple getPair(String var1) {
+        for (NodeTuple tuple : this.root.getValue()) {
+            if (((ScalarNode) tuple.getKeyNode()).getValue().equals(var1)) {
+                return tuple;
+            }
+        }
+        return null;
     }
 
+
+
+
+//    public Node getNode(String var1) {
+//        NodePair var2;
+//        return (var2 = this.getPair(var1)) == null ? null : var2.getValue();
+//    }
+    public Node getNode(String var1) {
+        NodeTuple var2;
+        return (var2 = this.getPair(var1)) == null ? null : var2.getValueNode();
+    }
+
+
+
+//    public boolean isSet(@NotNull String var1) {
+//        return this.root.getPairs().containsKey(var1);
+//    }
     public boolean isSet(@NotNull String var1) {
         return this.root.getPairs().containsKey(var1);
     }
 
+
+
+
     public boolean isSet(String... var1) {
         return this.findNode(var1) != null;
     }
+
+
+
 
     public @Nullable Object get(String... var1) {
         Node var2;
@@ -165,10 +234,56 @@ public class ConfigSection {
         }
     }
 
+//    public Node findNode(String[] var1) {
+//        Pair var2;
+//        return (var2 = this.traverseNodePairs(var1, false)) == null ? null : ((NodePair)var2.getValue()).getValue();
+//    }
     public Node findNode(String[] var1) {
         Pair var2;
         return (var2 = this.traverseNodePairs(var1, false)) == null ? null : ((NodePair)var2.getValue()).getValue();
     }
+
+
+
+//    public Pair<ConfigSection, NodeTuple> traverseNodePairs(String[] var1, boolean var2) {
+//        if (var1.length == 1) {
+//            NodeTuple var9;
+//            if ((var9 = this.getPair(var1[0])) == null) {
+//                return var2 ? Pair.of(this, this.root.put(var1[0], new MappingNode())) : null;
+//            } else {
+//                return Pair.of(this, var9);
+//            }
+//        } else {
+//            ConfigSection var3 = this;
+//            NodeTuple var4 = new NodeTuple(this.key == null ? ROOT : this.key, this.root);
+//            boolean var5 = false;
+//            int var6 = (var1 = var1).length;
+//
+//            for(int var7 = 0; var7 < var6; ++var7) {
+//                String var8 = var1[var7];
+//                if (var5) {
+//                    var4 = (var3 = new ConfigSection(null, (MappingNode)var4.getValueNode())).root.put(var8, new MappingNode());
+//                } else {
+//                    if (var4.getValueNode().getNodeId() != NodeId.mapping) {
+//                        var4 = null;
+//                    } else {
+//                        var4 = (var3 = new ConfigSection(null, (MappingNode)var4.getValueNode())).getPair(var8);
+//                    }
+//
+//                    if (var4 == null) {
+//                        if (!var2) {
+//                            return null;
+//                        }
+//
+//                        var5 = true;
+//                        var4 = var3.root.put(var8, new MappingNode());
+//                    }
+//                }
+//            }
+//
+//            return Pair.of(var3, var4);
+//        }
+//    }
 
     public Pair<ConfigSection, NodeTuple> traverseNodePairs(String[] var1, boolean var2) {
         if (var1.length == 1) {
@@ -209,6 +324,8 @@ public class ConfigSection {
             return Pair.of(var3, var4);
         }
     }
+
+
 
     public NodePair set(String var1, Object var2) {
         if (var2 == null) {

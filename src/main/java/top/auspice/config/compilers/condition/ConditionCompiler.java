@@ -2,7 +2,7 @@ package top.auspice.config.compilers.condition;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
-import top.auspice.config.compilers.math.MathCompiler;
+import top.auspice.config.compilers.math.OldMathCompiler;
 import top.auspice.config.compilers.base.expressions.ConditionalExpression;
 import top.auspice.config.compilers.base.expressions.MathExpression;
 import top.auspice.config.compilers.base.translators.ConditionalVariableTranslator;
@@ -105,7 +105,7 @@ public final class ConditionCompiler {
                             break label69;
                     }
                 case 1:
-                    MathCompiler.Expression var12 = MathCompiler.compile(var2);
+                    OldMathCompiler.Expression var12 = OldMathCompiler.compile(var2);
                     var11 = new ArithmeticOperand(var12);
                     break;
                 case 2:

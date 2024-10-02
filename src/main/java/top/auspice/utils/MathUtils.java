@@ -1,17 +1,11 @@
 package top.auspice.utils;
 
-import com.google.common.base.Strings;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
-import org.bukkit.OfflinePlayer;
-import top.auspice.config.compilers.math.MathCompiler;
-import top.auspice.config.compilers.base.expressions.MathExpression;
-import top.auspice.locale.message.placeholder.context.PlaceholderProvider;
-import top.auspice.locale.message.placeholder.PlaceholderTranslationContext;
 
 
 public final class MathUtils {

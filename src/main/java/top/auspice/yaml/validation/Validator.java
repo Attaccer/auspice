@@ -22,11 +22,11 @@ public final class Validator {
         return errors;
     }
 
-    static void removeComments(Node node) {
+    static void removeComments(Node node) {   //todo
         boolean alreadyHaveNewLine = false;
         Iterator<CommentLine> iterator = node.getBlockComments().iterator();       //TODO node.getComments(CommentType.BLOCK_BEFORE).iterator();  可能有误
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             if (iterator.next().getValue().equals("\n")) {
                 if (alreadyHaveNewLine) {
                     iterator.remove();
@@ -41,35 +41,39 @@ public final class Validator {
         node.setInLineComments(null);
     }
 
-    static void implicitSchemaOf(MappingNode root) {
-        NodeTuple tuple;
+    static void implicitSchemaOf(MappingNode root) {     //todo
+        NodeTuple noCommentsTuple;
         Node newValue;
-        for(Iterator<NodeTuple> it = root.getValue().iterator(); it.hasNext(); (tuple).setValueNode(newValue)) {
-            tuple = it.next();
-            Node val = tuple.getValueNode();
-            removeComments(tuple.getKeyNode());
-            if (val instanceof SequenceNode) {
+        for (NodeTuple tuple : root.getValue()) {
+            noCommentsTuple = tuple;
+            Node valueNode = noCommentsTuple.getValueNode();
+            removeComments(noCommentsTuple.getKeyNode());
+            if (valueNode instanceof SequenceNode) {
                 MappingNode mappingNode = new MappingNode();
                 newValue = mappingNode;
-                mappingNode.getValue().add(new NodeTuple(new ScalarNode(Tag.STR, "(type)", null , null, ScalarStyle.PLAIN), new ScalarNode(Tag.STR, "list", null, null, ScalarStyle.PLAIN)));
-                mappingNode.getValue().add(new NodeTuple(new ScalarNode(Tag.STR, "(elements)", null , null, ScalarStyle.PLAIN), new ScalarNode(Tag.STR, "str", null, null, ScalarStyle.PLAIN)));
-            } else if (val instanceof MappingNode) {
-                newValue = val;
-                implicitSchemaOf((MappingNode)val);
+                mappingNode.getValue().add(new NodeTuple(new ScalarNode(Tag.STR, "(type)", null, null, ScalarStyle.PLAIN), new ScalarNode(Tag.STR, "list", null, null, ScalarStyle.PLAIN)));
+                mappingNode.getValue().add(new NodeTuple(new ScalarNode(Tag.STR, "(elements)", null, null, ScalarStyle.PLAIN), new ScalarNode(Tag.STR, "str", null, null, ScalarStyle.PLAIN)));
+            } else if (valueNode instanceof MappingNode) {
+                newValue = valueNode;
+                implicitSchemaOf((MappingNode) valueNode);
             } else {
-                ScalarNode scalarNode = (ScalarNode)val;
+                ScalarNode scalarNode = (ScalarNode) valueNode;
                 String tagVal = scalarNode.getTag().getValue();
                 if (scalarNode.getTag() == Tag.FLOAT) {
                     tagVal = "decimal";
                 }
 
                 newValue = new ScalarNode(Tag.STR, tagVal, null, null, ScalarStyle.PLAIN);
+
             }
+
+            root.getValue().remove(tuple);
+            noCommentsTuple.setValueNode(newValue);
         }
 
     }
 
-//    public static void implicitSchemaGenerator(MappingNode root, Path to) {
+//    public static void implicitSchemaGenerator(MappingNode root, Path to) {     //todo
 //        Dump dumper = new Dump(new DumpSettings());
 //        implicitSchemaOf(root);
 //
