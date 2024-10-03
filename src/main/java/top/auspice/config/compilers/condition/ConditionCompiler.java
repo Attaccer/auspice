@@ -3,9 +3,9 @@ package top.auspice.config.compilers.condition;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.config.compilers.math.MathCompiler;
-import top.auspice.config.compilers.base.expressions.ConditionalExpression;
+import top.auspice.config.compilers.base.expressions.ConditionExpression;
 import top.auspice.config.compilers.base.expressions.MathExpression;
-import top.auspice.config.compilers.base.translators.ConditionalVariableTranslator;
+import top.auspice.config.compilers.base.translators.ConditionConfigStringTranslator;
 import top.auspice.utils.MathUtils;
 import top.auspice.utils.internal.Fn;
 
@@ -369,7 +369,7 @@ public final class ConditionCompiler {
             this.a = var1;
         }
 
-        public Boolean eval0(ConditionalVariableTranslator var1) {
+        public Boolean eval0(ConditionConfigStringTranslator var1) {
             return this.a;
         }
 
@@ -414,7 +414,7 @@ public final class ConditionCompiler {
             this.a = var1;
         }
 
-        public Object eval0(ConditionalVariableTranslator var1) {
+        public Object eval0(ConditionConfigStringTranslator var1) {
             Object var2;
             if ((var2 = var1.apply(this.a)) == null) {
                 throw new IllegalArgumentException("Unknown variable: " + this.a);
@@ -439,7 +439,7 @@ public final class ConditionCompiler {
             this.a = var1;
         }
 
-        public Double eval0(ConditionalVariableTranslator var1) {
+        public Double eval0(ConditionConfigStringTranslator var1) {
             return this.a.eval((var2) -> {
                 Object var3;
                 if ((var3 = var1.apply(var2)) == null) {
@@ -467,7 +467,7 @@ public final class ConditionCompiler {
             this.a = var1;
         }
 
-        public String eval0(ConditionalVariableTranslator var1) {
+        public String eval0(ConditionConfigStringTranslator var1) {
             return this.a;
         }
 
@@ -480,13 +480,13 @@ public final class ConditionCompiler {
         }
     }
 
-    public abstract static class LogicalOperand implements ConditionalExpression {
+    public abstract static class LogicalOperand implements ConditionExpression {
         protected String originalString = null;
 
         public LogicalOperand() {
         }
 
-        protected abstract Object eval0(ConditionalVariableTranslator var1);
+        protected abstract Object eval0(ConditionConfigStringTranslator var1);
 
         protected LogicalOperand withOriginalString(String var1) {
             this.originalString = var1;
@@ -498,7 +498,7 @@ public final class ConditionCompiler {
         }
 
         @NotNull
-        public Boolean eval(@NotNull ConditionalVariableTranslator var1) {
+        public Boolean eval(@NotNull ConditionConfigStringTranslator var1) {
             Object var2;
             if (!((var2 = this.eval0(var1)) instanceof Boolean)) {
                 throw new UnsupportedOperationException("Not a boolean expression: " + var2);
@@ -680,7 +680,7 @@ public final class ConditionCompiler {
             this.b = var2;
         }
 
-        public Boolean eval0(ConditionalVariableTranslator var1) {
+        public Boolean eval0(ConditionConfigStringTranslator var1) {
             return this.a.a(Fn.nullSupplier(), new a(this.b, var1));
         }
 
@@ -704,7 +704,7 @@ public final class ConditionCompiler {
             this.c = var3;
         }
 
-        public Boolean eval0(ConditionalVariableTranslator var1) {
+        public Boolean eval0(ConditionConfigStringTranslator var1) {
             return this.a.a(new a(this.b, var1), new a(this.c, var1));
         }
 
@@ -719,9 +719,9 @@ public final class ConditionCompiler {
 
     private static final class a implements Supplier<Object> {
         private final LogicalOperand a;
-        private final ConditionalVariableTranslator b;
+        private final ConditionConfigStringTranslator b;
 
-        public a(LogicalOperand var1, ConditionalVariableTranslator var2) {
+        public a(LogicalOperand var1, ConditionConfigStringTranslator var2) {
             this.a = var1;
             this.b = var2;
         }

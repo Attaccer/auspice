@@ -12,7 +12,7 @@ import kotlin.text.StringsKt;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import top.auspice.config.compilers.base.expressions.MathExpression;
-import top.auspice.config.compilers.base.translators.MathematicalVariableTranslator;
+import top.auspice.config.compilers.base.translators.MathConfigStringTranslator;
 import top.auspice.utils.time.TimeUtils;
 
 import java.util.*;
@@ -41,7 +41,7 @@ public final class MathCompiler {
     @NotNull
     private static final Operator[] operators = new Operator[127];
     @NotNull
-    private static final MathematicalVariableTranslator j = MathCompiler::b;
+    private static final MathConfigStringTranslator j = MathCompiler::b;
     
     @NotNull
     public static final Expression DEFAULT_VALUE = new ConstantExpr(0.0, ConstantExprType.NUMBER);
@@ -1269,7 +1269,7 @@ public final class MathCompiler {
         }
 
         @NotNull
-        public Double eval(@NotNull MathematicalVariableTranslator var1) {
+        public Double eval(@NotNull MathConfigStringTranslator var1) {
             Objects.requireNonNull(var1, "");
             return this.a;
         }
@@ -1338,7 +1338,7 @@ public final class MathCompiler {
         }
 
         @NotNull
-        public Double eval(@NotNull MathematicalVariableTranslator var1) {
+        public Double eval(@NotNull MathConfigStringTranslator var1) {
             Objects.requireNonNull(var1, "");
             return this.b.getFunction().apply(this.a.eval(var1), this.c.eval(var1));
         }
@@ -1373,7 +1373,7 @@ public final class MathCompiler {
         }
 
         @NotNull
-        public abstract Double eval(@NotNull MathematicalVariableTranslator var1);
+        public abstract Double eval(@NotNull MathConfigStringTranslator var1);
 
         public boolean isDefault() {
             return this == MathCompiler.DEFAULT_VALUE;
@@ -1424,10 +1424,10 @@ public final class MathCompiler {
         @NotNull
         private final FunctionExpr a;
         @NotNull
-        private final MathematicalVariableTranslator b;
+        private final MathConfigStringTranslator b;
         private int c;
 
-        public FnArgs(@NotNull FunctionExpr var1, @NotNull MathematicalVariableTranslator var2) {
+        public FnArgs(@NotNull FunctionExpr var1, @NotNull MathConfigStringTranslator var2) {
             Objects.requireNonNull(var1, "");
             Objects.requireNonNull(var2, "");
 
@@ -1539,7 +1539,7 @@ public final class MathCompiler {
         }
 
         @NotNull
-        public Double eval(@NotNull MathematicalVariableTranslator var1) {
+        public Double eval(@NotNull MathConfigStringTranslator var1) {
             Objects.requireNonNull(var1, "");
             return this.handler.getFunction().apply(new FnArgs(this, var1));
         }
@@ -1691,7 +1691,7 @@ public final class MathCompiler {
         }
 
         @NotNull
-        public Double eval(@NotNull MathematicalVariableTranslator var1) {
+        public Double eval(@NotNull MathConfigStringTranslator var1) {
             Objects.requireNonNull(var1, "");
             return super.getValue();
         }
@@ -1724,7 +1724,7 @@ public final class MathCompiler {
         }
 
         @NotNull
-        public Double eval(@NotNull MathematicalVariableTranslator var1) {
+        public Double eval(@NotNull MathConfigStringTranslator var1) {
             Objects.requireNonNull(var1, "");
             Double var3;
             if ((var3 = var1.apply(this.a)) == null) {
