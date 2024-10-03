@@ -100,7 +100,7 @@ public final class MessageCompiler {
                 if (compiledPieces.isEmpty()) {               //若解析出多个MessagePiece, 不修改指针; 若只解析出一个MessagePiece, 将指针增加此MessagePiece的长度; 若没有解析出MessagePiece, 则代表是MessagePiece.Plain, 指针自增1
                     this.plainChars.add(pointerChar);
                 } else if (compiledPieces.size() == 1) {
-                    this.pointer = this.pointer + compiledPieces.getFirst().length();
+                    this.pointer = this.pointer + compiledPieces.get(0).length();
                 } else {                                              //TODO
                     this.exceptions.add(new MessageCompilerException("", "", this.pointer, "Compiled " + compiledPieces.size() + " MessagePieces, are you using the custom MessagePieceCompiler?"));
                 }
