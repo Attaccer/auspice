@@ -12,6 +12,7 @@ import java.util.*;
 
 
 public class ConfigSection {
+
     protected final ScalarNode key;
     protected final MappingNode root;
     private static final ScalarNode ROOT;
